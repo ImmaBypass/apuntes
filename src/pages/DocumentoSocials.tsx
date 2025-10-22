@@ -56,14 +56,59 @@ const DocumentoSocials: React.FC = () => {
           </ul>
 
           <h4 className="text-xl font-semibold mb-2">ESTAT DEL BENESTAR:</h4>
-          <p className="mb-6">Necessita terciarització (que la major part de la població treballi en el sector terciari).</p>
+          <p className="mb-6">
+            Necessita terciarització (que la major part de la població treballi en el sector terciari).
+          </p>
 
           <h4 className="text-xl font-semibold mb-2">SISTEMA ECONÒMIC</h4>
           <p className="mb-6">
             La nostra ideologia econòmica és el <strong>Capitalisme</strong>, i el nostre sistema econòmic és el <strong>Sistema d’Economia de mercat</strong>.
           </p>
 
-          <p className="text-sm text-gray-600 italic">1-2. Conjunt d’idees sobre alguna cosa.</p>
+          {/* NUEVA SECCIÓN - IDEOLOGIA */}
+          <h4 className="text-xl font-semibold mb-2">IDEOLOGIA<sup>3</sup></h4>
+          <p className="mb-6">
+            Una <strong>ideologia</strong> és un conjunt d’idees sobre alguna cosa, per exemple com hauria de funcionar la societat, l’economia o la política.
+          </p>
+
+          {/* NUEVA SECCIÓN - CAPITALISME */}
+          <h4 className="text-xl font-semibold mb-2">EL CAPITALISME</h4>
+          <p className="mb-3">
+            La paraula <strong>Capitalisme</strong> ve de <strong>Capital</strong>.
+          </p>
+          <p className="mb-3">
+            <strong>Capital</strong> és la quantitat de diners que necessitem per començar una empresa.
+          </p>
+          <p className="mb-3">
+            En el <strong>capitalisme</strong>, qui decideix <strong>qui</strong>, <strong>què</strong>, <strong>com</strong> i <strong>quan</strong> produir, distribuir i consumir són les <strong>empreses</strong>.
+          </p>
+
+          <ul className="list-disc pl-6 mb-4">
+            <li>
+              <strong>Lliure competència:</strong> Les empreses lluiten entre elles per aconseguir el màxim nombre de clients.  
+              Si una empresa aconsegueix el 100% dels clients, això s’anomena <strong>monopoli</strong>.
+            </li>
+            <li>
+              <strong>Especialització del treball:</strong> La gent s’especialitza en una cosa específica i no ho fa tot.
+            </li>
+            <li>
+              <strong>Mercat:</strong> Una empresa o conjunt d’empreses destinades a un tipus de client.
+            </li>
+            <li><strong>Matèries primeres:</strong> Materials necessaris per la producció.</li>
+            <li><strong>Energia i mà d’obra:</strong> Treballadors necessaris per la producció.</li>
+          </ul>
+
+          <p className="mb-3">
+            La llei principal que fa que el capitalisme funcioni és la <strong>Llei de l’Oferta i la Demanda</strong>.
+          </p>
+          <p className="mb-3">
+            Aquesta llei regula el <strong>preu de les coses</strong>: les empreses creen un producte i posen un preu en funció de la <strong>demanda</strong> i de quanta gent ho vol.
+          </p>
+          <p className="mb-6">
+            <strong>Obsolescència programada:</strong> Els productes es fan obsolets després d’un temps o d’uns usos intencionadament, per així vendre més i guanyar diners.
+          </p>
+
+          <p className="text-sm text-gray-600 italic">1-2. Béns i serveis. 3. Conjunt d’idees sobre alguna cosa.</p>
 
           <button
             onClick={() => navigate("/")}
