@@ -1,92 +1,97 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+
+/**
+ * DocumentoFisicaQuimica - Mini Apunts per memoritzar la primera columna.
+ * - Estil groc al header i franja blanca com abans.
+ * - Contingut concentrat en símbols i frase mnemotècnica.
+ */
 
 const elementos = [
-  { simbolo: "H", nombre: "Hidrógeno" },
-  { simbolo: "Li", nombre: "Litio" },
-  { simbolo: "Na", nombre: "Sodio" },
-  { simbolo: "K", nombre: "Potasio" },
-  { simbolo: "Rb", nombre: "Rubidio" },
-  { simbolo: "Cs", nombre: "Cesio" },
-  { simbolo: "Fr", nombre: "Francio" },
+  { sym: "H", name: "Hidrogen" },
+  { sym: "Li", name: "Liti" },
+  { sym: "Na", name: "Sodi" },
+  { sym: "K", name: "Potasio" },
+  { sym: "Rb", name: "Rubidi" },
+  { sym: "Cs", name: "Cesi" },
+  { sym: "Fr", name: "Francio" },
 ];
 
 const DocumentoFisicaQuimica: React.FC = () => {
-  const [respuesta, setRespuesta] = useState("");
-  const [resultado, setResultado] = useState("");
-  const [actual, setActual] = useState(() => elementos[Math.floor(Math.random() * elementos.length)]);
-
-  const comprobar = () => {
-    if (respuesta.trim().toLowerCase() === actual.nombre.toLowerCase()) {
-      setResultado("✅ Correcte!");
-    } else {
-      setResultado(`❌ Incorrecte. Era ${actual.nombre}.`);
-    }
-    setTimeout(() => {
-      setActual(elementos[Math.floor(Math.random() * elementos.length)]);
-      setRespuesta("");
-      setResultado("");
-    }, 2000);
-  };
+  const navigate = useNavigate();
+  const [selected, setSelected] = useState<string | null>(null);
+  const mnemonic = "Hay limones naranjas y kiwis robados en casa de Francisco";
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-200 flex flex-col items-center py-10 px-6">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
+    <div className="min-h-screen bg-white flex flex-col">
+      {/* Header (igual que abans) */}
+      <div className="relative bg-[#dabd3e] border-b-4 border-dashed border-black overflow-hidden h-[7rem]">
+        <div className="px-8 pt-8 relative h-full">
+          <h1 className="text-5xl font-bold text-black absolute top-6 scale-110 origin-left flex items-center gap-3">
+            FÍSICA I QUÍMICA
+            <span className="bg-[#f3c84a] text-black text-sm font-semibold px-3 py-1 rounded-full border border-black">
+              Mini Apunts
+            </span>
+          </h1>
+          <div className="absolute bottom-1 left-0 right-0 h-[0.8rem] bg-white border-y-[4px] border-black" />
+        </div>
+      </div>
+
+      {/* Main */}
+      <motion.main
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white shadow-lg rounded-3xl border border-gray-300 p-8 max-w-xl text-center"
+        transition={{ duration: 0.4 }}
+        className="flex-1 px-10 py-10"
       >
-        <h1 className="text-3xl font-bold text-blue-700 mb-3">Mini Apunts: Física i Química</h1>
-        <p className="text-gray-600 mb-6 italic">Primera columna de la Taula Periòdica</p>
+        <div className="max-w-4xl mx-auto bg-white border rounded-3xl p-8 shadow-sm">
+          <h2 className="text-3xl font-bold mb-4">Primera columna — Símbols a memoritzar</h2>
 
-        <div className="bg-blue-50 p-4 rounded-xl border border-blue-200 text-left mb-6">
-          <h2 className="text-xl font-semibold text-blue-800 mb-2">🧠 Truc per recordar-los</h2>
-          <p className="text-gray-700">
-            <strong>Frase:</strong> <em>"Hay Limones Naranjas y Kiwis Robados en Casa de Francisco"</em>
-          </p>
-          <ul className="list-disc ml-6 mt-2">
-            <li><strong>H</strong> → Hidrógeno</li>
-            <li><strong>Li</strong> → Litio</li>
-            <li><strong>Na</strong> → Sodio</li>
-            <li><strong>K</strong> → Potasio</li>
-            <li><strong>Rb</strong> → Rubidio</li>
-            <li><strong>Cs</strong> → Cesio</li>
-            <li><strong>Fr</strong> → Francio</li>
-          </ul>
+          <div className="bg-yellow-50 border border-yellow-200 p-4 rounded mb-6">
+            <p className="mb-2"><strong>Frase mnemotècnica:</strong></p>
+            <p className="italic text-gray-800">{mnemonic}</p>
+            <p className="text-sm text-gray-600 mt-2">Associacions ràpides: Limones → Li, Naranjas → Na, Kiwis → K, etc.</p>
+          </div>
+
+          <div className="grid grid-cols-3 sm:grid-cols-7 gap-3 mb-6">
+            {elementos.map((el) => (
+              <button
+                key={el.sym}
+                onClick={() => setSelected((s) => (s === el.sym ? null : el.sym))}
+                className={`flex flex-col items-center justify-center p-3 rounded-lg border ${selected === el.sym ? "bg-[#dabd3e] border-black" : "bg-white border-gray-200"}`}
+              >
+                <div className="text-2xl font-bold">{el.sym}</div>
+                <div className="text-xs text-gray-700 mt-1">{el.name}</div>
+              </button>
+            ))}
+          </div>
+
+          {selected && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-4 border rounded bg-gray-50 mb-6">
+              <h3 className="font-bold text-lg mb-2">{selected} — {elementos.find(e => e.sym === selected)?.name}</h3>
+              <p className="text-sm text-gray-700">
+                Petit recordatori: només cal memoritzar el símbol i el nom per a aquest tema.
+                No cal aprofundir en propietats complexes; l'important és l'ordre i la correspondència símbol→nom.
+              </p>
+            </motion.div>
+          )}
+
+          <div className="mb-6">
+            <h4 className="font-semibold mb-2">Mini activitat: endevina</h4>
+            <p className="text-sm text-gray-600 mb-3">Fes clic a un símbol i intenta dir el nom en veu alta; comprova després amb la targeta.</p>
+          </div>
+
+          <div className="flex justify-center">
+            <button
+              onClick={() => navigate("/")}
+              className="bg-[#dabd3e] px-6 py-2 rounded-full font-bold text-black shadow-md hover:scale-105 transition-transform"
+            >
+              Tornar a Apuntes
+            </button>
+          </div>
         </div>
-
-        <div className="bg-yellow-50 p-4 rounded-xl border border-yellow-200 text-left mb-6">
-          <h2 className="text-xl font-semibold text-yellow-800 mb-2">⚙️ Curiositat</h2>
-          <p className="text-gray-700">
-            Tots aquests elements formen part del <strong>grup 1</strong>, conegut com els
-            <strong> metalls alcalins</strong>. Reaccionen fàcilment amb l’aigua i augmenten la seva
-            reactivitat cap avall (el Franci és el més reactiu!).
-          </p>
-        </div>
-
-        <div className="bg-green-50 p-4 rounded-xl border border-green-200 mb-6">
-          <h2 className="text-xl font-semibold text-green-800 mb-3">🧩 Joc ràpid: endevina el nom</h2>
-          <p className="text-lg mb-2">Quin element és <strong>{actual.simbolo}</strong>?</p>
-          <input
-            value={respuesta}
-            onChange={(e) => setRespuesta(e.target.value)}
-            placeholder="Escriu el nom..."
-            className="border border-gray-400 rounded-lg px-3 py-2 w-2/3 text-center mb-2"
-          />
-          <br />
-          <button
-            onClick={comprobar}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg transition"
-          >
-            Comprovar
-          </button>
-          {resultado && <p className="mt-3 text-lg font-semibold">{resultado}</p>}
-        </div>
-
-        <p className="text-gray-600 italic text-sm">
-          💡 Recorda: <strong>Només el símbol</strong> porta majúscula inicial i minúscula si té dues lletres.
-        </p>
-      </motion.div>
+      </motion.main>
     </div>
   );
 };

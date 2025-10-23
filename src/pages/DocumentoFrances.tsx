@@ -2,23 +2,34 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * DocumentoFrances - Unit 3: gramàtica i vocabulari
+ * Flashcards senzilles i fiables: no usarem 3D flip (feia problemes en alguns navegadors),
+ * sinó targetes que canvien de costat amb animacions i text clar.
+ */
+
 const vocabList = [
-  "le pain", "le fromage", "le poulet", "la soupe", "les légumes", "le menu", "le dessert"
+  { fr: "le pain", es: "pa" },
+  { fr: "le fromage", es: "formatge" },
+  { fr: "le poulet", es: "pollastre" },
+  { fr: "la soupe", es: "sopa" },
+  { fr: "les légumes", es: "verdures" },
+  { fr: "le dessert", es: "postre" },
+  { fr: "le menu", es: "menú" },
 ];
 
 const DocumentoFrances: React.FC = () => {
   const navigate = useNavigate();
-  const [cardIndex, setCardIndex] = useState(0);
-  const [flipped, setFlipped] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [showTranslation, setShowTranslation] = useState(false);
 
   const next = () => {
-    setFlipped(false);
-    setCardIndex((i) => (i + 1) % vocabList.length);
+    setShowTranslation(false);
+    setIndex((i) => (i + 1) % vocabList.length);
   };
-
   const prev = () => {
-    setFlipped(false);
-    setCardIndex((i) => (i - 1 + vocabList.length) % vocabList.length);
+    setShowTranslation(false);
+    setIndex((i) => (i - 1 + vocabList.length) % vocabList.length);
   };
 
   return (
@@ -33,117 +44,102 @@ const DocumentoFrances: React.FC = () => {
         </div>
       </div>
 
-      {/* ADVERTENCIA */}
+      {/* Warning */}
       <div className="bg-yellow-200 text-yellow-900 text-center py-2 text-sm font-semibold border-b border-yellow-400">
-        ⚠️ Es posible que esta página esté inacabada o falte información.
+        ⚠️ Es possible que aquesta pàgina estigui inacabada o falti informació.
       </div>
 
-      {/* Contenido animado */}
-      <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.45 }}
-        className="px-12 py-10 flex-1"
+      <motion.main
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="flex-1 px-10 py-10"
       >
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold mb-6">Apuntes — Francès (Unit 3)</h2>
+        <div className="max-w-4xl mx-auto space-y-6">
+          <h2 className="text-3xl font-bold">Apuntes — Francès (Unit 3)</h2>
 
           {/* Gramàtica resumida */}
-          <section className="mb-8">
-            <h3 className="text-2xl font-semibold mb-3">Grammaire — verbs i partitius</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <section className="bg-gray-50 p-4 rounded border">
+            <h3 className="font-semibold text-xl mb-2">Grammaire — verbs i partitifs</h3>
+
+            <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <h4 className="font-semibold mb-2">Conjugació (MANGER)</h4>
-                <pre className="bg-gray-100 p-4 rounded">{`je mange
+                <h4 className="font-semibold">Conjugació: <em>MANGER</em> (présent)</h4>
+                <pre className="bg-white p-3 rounded mt-2 text-sm">
+{`je mange
 tu manges
 il/elle mange
 nous mangeons
 vous mangez
-ils/elles mangent`}</pre>
+ils/elles mangent`}
+                </pre>
               </div>
 
               <div>
-                <h4 className="font-semibold mb-2">Partitifs i quantitat</h4>
-                <p className="mb-2"><strong>du / de la / de l' / des</strong> — per parlar d'una part d'un tot (ex: du pain, de la farine)</p>
-                <p><strong>Quantitat:</strong> "trop de", "assez de", "un peu de", "pas assez de".</p>
+                <h4 className="font-semibold">Articles partitifs i quantitat</h4>
+                <p className="mt-2"><strong>du / de la / de l' / des</strong> — s'usen per parlar d'una part d'un tot (ex: du pain).</p>
+                <p className="mt-2"><strong>Expressions de quantitat:</strong> <em>trop de, assez de, un peu de, pas assez de</em>.</p>
               </div>
             </div>
           </section>
 
-          {/* Vocabulari interactiu (tarjetas flip) */}
-          <section className="mb-8">
-            <h3 className="text-2xl font-semibold mb-3">Vocabulaire — flashcards</h3>
+          {/* Vocabulari: flashcard senzilles */}
+          <section className="p-4 rounded border bg-white">
+            <h3 className="font-semibold text-xl mb-3">Vocabulaire — flashcards</h3>
 
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4">
               <button onClick={prev} className="px-3 py-2 rounded-full border bg-white">◀</button>
 
-              <div className="w-96 h-48 perspective">
-                <motion.div
-                  onClick={() => setFlipped((f) => !f)}
-                  animate={{ rotateY: flipped ? 180 : 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="w-full h-full relative bg-white rounded-xl shadow-lg border border-gray-300 flex items-center justify-center cursor-pointer"
-                  style={{ transformStyle: "preserve-3d" }}
-                >
-                  {/* front */}
-                  <div style={{ backfaceVisibility: "hidden" }} className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-2xl font-bold">{vocabList[cardIndex]}</span>
-                  </div>
-
-                  {/* back */}
-                  <div style={{ transform: "rotateY(180deg)", backfaceVisibility: "hidden" }} className="absolute inset-0 flex items-center justify-center p-4">
-                    <div>
-                      <div className="text-lg font-semibold">Traducció i exemples</div>
-                      <p className="text-sm text-gray-700 mt-2">(Exemple) {vocabList[cardIndex]} — aliment comú.</p>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35 }}
+                className="w-80 h-36 flex flex-col items-center justify-center border rounded-xl shadow"
+              >
+                <div className="text-2xl font-bold">{vocabList[index].fr}</div>
+                {showTranslation ? (
+                  <div className="text-sm text-gray-700 mt-2">{vocabList[index].es}</div>
+                ) : (
+                  <div className="text-sm text-gray-400 mt-2">(fes clic per veure la traducció)</div>
+                )}
+              </motion.div>
 
               <button onClick={next} className="px-3 py-2 rounded-full border bg-white">▶</button>
             </div>
 
-            <p className="text-sm text-gray-500 mt-3">Fes clic a la targeta per donar-li la volta.</p>
-          </section>
+            <div className="mt-3 flex items-center gap-3">
+              <button
+                onClick={() => setShowTranslation((s) => !s)}
+                className="px-4 py-2 rounded-full bg-[#dabd3e] text-black font-semibold"
+              >
+                {showTranslation ? "Amagar traducció" : "Mostrar traducció"}
+              </button>
 
-          {/* Taula resumida per estudiar (orden) */}
-          <section className="mb-8">
-            <h3 className="text-2xl font-semibold mb-3">Resum de continguts</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-gray-50 p-4 border rounded">
-                <strong>Grammar</strong>
-                <ul className="pl-5 list-disc mt-2 text-sm">
-                  <li>Conjugacions regulars</li>
-                  <li>Articles partitifs</li>
-                </ul>
-              </div>
-              <div className="bg-gray-50 p-4 border rounded">
-                <strong>Vocabulaire</strong>
-                <ul className="pl-5 list-disc mt-2 text-sm">
-                  <li>Aliments i plats</li>
-                  <li>Paraules de menú</li>
-                </ul>
-              </div>
-              <div className="bg-gray-50 p-4 border rounded">
-                <strong>Exam tips</strong>
-                <ul className="pl-5 list-disc mt-2 text-sm">
-                  <li>Repassa conjugacions regularly</li>
-                  <li>Aprèn 15 paraules del vocab</li>
-                </ul>
-              </div>
+              <p className="text-sm text-gray-500">Fes servir les fletxes per repassar vocabulari.</p>
             </div>
           </section>
 
-          <div className="mt-8 flex justify-center">
+          {/* Resum i consells */}
+          <section className="bg-gray-50 p-4 rounded border">
+            <h3 className="font-semibold text-xl mb-2">Resum i consells d'estudi</h3>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Repasa les conjugacions en veu activa i practica frases senzilles.</li>
+              <li>Aprèn articles partitifs amb exemples reals (du pain, de la soupe, des légumes).</li>
+              <li>Memoritza un llistat de 15-20 paraules de vocabulari relacionades amb aliments i plats.</li>
+            </ul>
+          </section>
+
+          <div className="flex justify-center">
             <button
               onClick={() => navigate("/")}
               className="bg-[#dabd3e] px-6 py-2 rounded-full font-bold text-black shadow-md hover:scale-105 transition-transform"
             >
-              Volver a Apuntes
+              Tornar a Apuntes
             </button>
           </div>
         </div>
-      </motion.div>
+      </motion.main>
     </div>
   );
 };
