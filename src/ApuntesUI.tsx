@@ -19,6 +19,21 @@ const subjectsContent: Record<
     description: "Temari d'Economia de Socials.",
     route: "/documento/socials",
   },
+  BIOLOGIA: {
+    title: "APUNTS BIOLOGIA",
+    description: "Resum de cèl·lula, orgànuls, biomolècules i mitosi.",
+    route: "/documento/biologia",
+  },
+  FRANCES: {
+    title: "APUNTS FRANÇÈS",
+    description: "Gramàtica i vocabulari: verbs menjar/compra/beure, articles partitifs i quantitats.",
+    route: "/documento/frances",
+  },
+  FISICA_QUIMICA: {
+    title: "APUNTS FÍSICA I QUÍMICA",
+    description: "Taula periòdica inicial: trucs i mnemotècniques per a H, Li, Na, K, Rb, Cs, Fr.",
+    route: "/documento/fisica-quimica",
+  },
 };
 
 /* ---------------------- Tarjeta de materia ---------------------- */
@@ -38,7 +53,7 @@ const SubjectCard: React.FC<SubjectCardProps> = ({
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.3 }}
+    transition={{ duration: 0.25 }}
     className="border-2 border-dashed border-gray-400 rounded-lg p-4 bg-gray-100 w-60 flex flex-col justify-between"
   >
     <h3 className="text-xl font-bold text-center mb-2">{title}</h3>
@@ -59,6 +74,9 @@ const ApuntesUI: React.FC = () => {
   const subjects = [
     { title: "MATEMATIQUES", subtitle: "Potències i Arrels", key: "MATEMATIQUES" },
     { title: "SOCIALS", subtitle: "Economia", key: "SOCIALS" },
+    { title: "BIOLOGIA", subtitle: "Cèl·lula i teixits", key: "BIOLOGIA" },
+    { title: "FRANCES", subtitle: "Grammaire i vocabulaire", key: "FRANCES" },
+    { title: "FÍSICA & QUÍMICA", subtitle: "Taula periòdica (inici)", key: "FISICA_QUIMICA" },
   ];
 
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
@@ -96,7 +114,7 @@ const ApuntesUI: React.FC = () => {
 
           {/* alpha y signo de interrogación clicable */}
           <div className="absolute bottom-[1.4rem] right-4 text-black text-sm font-medium flex items-center gap-2">
-            alpha0.2 
+            alpha0.2
             <button
               onClick={() => navigate("/informacion")}
               className="text-black hover:scale-110 transition-transform"
