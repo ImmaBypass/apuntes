@@ -1,13 +1,17 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const DocumentoBiologia: React.FC = () => {
   const navigate = useNavigate();
 
+  const [showOrganelle, setShowOrganelle] = useState<string | null>(null);
+  const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
+  const [quizSubmitted, setQuizSubmitted] = useState(false);
+
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      {/* HEADER */}
+      {/* HEADER (no animado) */}
       <div className="relative bg-[#dabd3e] border-b-4 border-dashed border-black overflow-hidden h-[7rem]">
         <div className="px-8 pt-8 relative h-full">
           <h1 className="text-5xl font-bold text-black absolute top-6 scale-110 origin-left">
@@ -24,86 +28,148 @@ const DocumentoBiologia: React.FC = () => {
 
       {/* CONTENIDO */}
       <motion.div
-        initial={{ opacity: 0, x: 25 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: -25 }}
-        transition={{ duration: 0.45, ease: "easeOut" }}
-        className="flex flex-1 justify-start px-16 py-10 gap-8"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45 }}
+        className="flex-1 px-12 py-10"
       >
-        <div className="max-w-3xl text-left flex-1 pr-12">
-          <h2 className="text-3xl font-bold mb-4">1. La cél·lula: unitat de vida</h2>
+        <div className="max-w-5xl mx-auto bg-white">
+          <h2 className="text-3xl font-bold mb-6">Biologia — Apunts</h2>
 
-          <h3 className="text-xl font-semibold mb-2">Tipus de cèl·lules</h3>
-          <p className="mb-2"><strong>Cèl·lula eucariota:</strong> Té nucli delimitat per membrana i orgànuls especialitzats. Les cèl·lules humanes són eucariotes.</p>
-          <p className="mb-2"><strong>Cèl·lula procariota:</strong> No té nucli ni orgànuls membranosos. L'ADN es troba lliure al citoplasma.</p>
-          <p className="mb-2"><strong>Cèl·lula animal:</strong> No té paret cel·lular ni cloroplasts. Forma arrodonida o irregular.</p>
-          <p className="mb-4"><strong>Cèl·lula vegetal:</strong> Té paret cel·lular rígida i cloroplasts per fer la fotosíntesi.</p>
+          {/* 1. La cèl·lula */}
+          <section className="mb-8">
+            <h3 className="text-2xl font-semibold mb-3">1. La cèl·lula: unitat de vida</h3>
+            <p className="mb-4">
+              Tipus de cèl·lules i parts principals.
+            </p>
 
-          <h3 className="text-xl font-semibold mb-2">Parts principals</h3>
-          <p className="mb-2"><strong>Membrana plasmàtica:</strong> Estructura semipermeable que regula l’entrada i sortida de substàncies.</p>
-          <p className="mb-2"><strong>Citoplasma:</strong> Medi intern on es troben els orgànuls.</p>
-          <p className="mb-2"><strong>Nucli:</strong> Conté el material genètic (ADN) i regula les funcions cel·lulars.</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-semibold mb-2">Tipus (resum)</h4>
+                <ul className="list-disc pl-6 space-y-2">
+                  <li><strong>Eucariota:</strong> nucli delimitat i orgànuls.</li>
+                  <li><strong>Procariota:</strong> sense nucli definit.</li>
+                  <li><strong>Animal:</strong> sense paret cel·lular ni cloroplasts.</li>
+                  <li><strong>Vegetal:</strong> amb paret i cloroplasts (fotosíntesi).</li>
+                </ul>
+              </div>
 
-          <h3 className="text-xl font-semibold mt-6 mb-2">2. Orgànuls i estructures cel·lulars</h3>
-          <p className="mb-2"><strong>Mitocondris:</strong> Generen energia mitjançant la respiració cel·lular.</p>
-          <p className="mb-2"><strong>Reticle endoplasmàtic rugós:</strong> Sintetitza proteïnes.</p>
-          <p className="mb-2"><strong>Reticle endoplasmàtic llis:</strong> Sintetitza lípids.</p>
-          <p className="mb-2"><strong>Aparell de Golgi:</strong> Modifica i empaqueta proteïnes.</p>
-          <p className="mb-2"><strong>Lisosomes:</strong> Contenen enzims digestius.</p>
-          <p className="mb-2"><strong>Vacúols:</strong> Emmagatzemen substàncies.</p>
-          <p className="mb-2"><strong>Cilis i flagels:</strong> Prolongacions que permeten moviment.</p>
+              <div>
+                <h4 className="font-semibold mb-2">Parts principals</h4>
+                <ul className="list-disc pl-6 space-y-2">
+                  <li><strong>Membrana plasmàtica:</strong> regula entrada/sortida.</li>
+                  <li><strong>Citoplasma:</strong> medi intern amb orgànuls.</li>
+                  <li><strong>Nucli:</strong> material genètic (ADN).</li>
+                </ul>
+              </div>
+            </div>
+          </section>
 
-          <h3 className="text-xl font-semibold mt-6 mb-2">3. Biomolècules</h3>
-          <p className="mb-2"><strong>Glúcids:</strong> Font d’energia ràpida. Ex: glucosa.</p>
-          <p className="mb-2"><strong>Lípids:</strong> Reserva energètica i components de membranes.</p>
-          <p className="mb-2"><strong>Proteïnes:</strong> Funcions estructurals, enzimàtiques i de transport.</p>
-          <p className="mb-4"><strong>Àcids nucleics:</strong> ADN i ARN, contenen la informació genètica.</p>
+          {/* 2. Organuls interactiu */}
+          <section className="mb-8">
+            <h3 className="text-2xl font-semibold mb-3">2. Orgànuls (clic per veure)</h3>
 
-          <h3 className="text-xl font-semibold mt-6 mb-2">4. Metabolisme cel·lular</h3>
-          <p className="mb-2"><strong>Anabolisme:</strong> Reaccions que construeixen molècules complexes (ex: síntesi proteïnes).</p>
-          <p className="mb-2"><strong>Catabolisme:</strong> Reaccions que degraden molècules per obtenir energia (ex: respiració cel·lular).</p>
-          <p className="mb-4"><strong>Respiració cel·lular:</strong> Glucosa + O₂ → CO₂ + H₂O + energia (ATP). Es realitza als mitocondris.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[
+                { key: "mitocondri", title: "Mitocondris", text: "Generen energia (ATP)." },
+                { key: "retipll", title: "Reticle endoplasmàtic llis", text: "Sintetitza lípids." },
+                { key: "retiprr", title: "Reticle endoplasmàtic rugós", text: "Sintetitza proteïnes (ribosomes)." },
+                { key: "golgi", title: "Aparell de Golgi", text: "Modifica i empaqueta proteïnes." },
+                { key: "lisosoma", title: "Lisosomes", text: "Digestió intracel·lular amb enzims." },
+                { key: "vacuo", title: "Vacúols", text: "Emmagatzematge de substàncies." },
+              ].map((o) => (
+                <motion.button
+                  key={o.key}
+                  onClick={() => setShowOrganelle((s) => (s === o.key ? null : o.key))}
+                  className="bg-gray-100 border border-gray-300 rounded-xl p-4 text-left hover:shadow-md transition-shadow"
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <div className="flex items-center justify-between">
+                    <strong>{o.title}</strong>
+                    <span className="text-sm text-gray-600">{showOrganelle === o.key ? "▲" : "▼"}</span>
+                  </div>
 
-          <h3 className="text-xl font-semibold mt-6 mb-2">5. Transport a través de la membrana</h3>
-          <p className="mb-2"><strong>Difusió:</strong> Moviment de molècules petites segons gradient.</p>
-          <p className="mb-2"><strong>Osmosi:</strong> Difusió de l'aigua a través de la membrana.</p>
-          <p className="mb-2"><strong>Difusió facilitada:</strong> Amb ajuda de proteïnes transportadores.</p>
-          <p className="mb-2"><strong>Transport actiu:</strong> Contra gradient, requereix energia.</p>
-          <p className="mb-4"><strong>Endocitosi/Exocitosi:</strong> Entrada/expulsió mitjançant vesícules.</p>
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={showOrganelle === o.key ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="mt-3 overflow-hidden text-sm text-gray-700"
+                  >
+                    {o.text}
+                  </motion.div>
+                </motion.button>
+              ))}
+            </div>
+          </section>
 
-          <h3 className="text-xl font-semibold mt-6 mb-2">6. Homeòstasi</h3>
-          <p className="mb-4">Capacitat de mantenir condicions internes estables. Ex: regulació de la temperatura mitjançant la suor.</p>
+          {/* 3. Biomolècules: reveal cards */}
+          <section className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4">3. Biomolècules — Mostra/Amaga</h3>
+            <div className="flex gap-4 flex-wrap">
+              {[
+                { id: "glucids", title: "Glúcids", desc: "Font d'energia ràpida. → Glucosa" },
+                { id: "lipids", title: "Lípids", desc: "Reserva energètica i part de les membranes." },
+                { id: "prote", title: "Proteïnes", desc: "Funcions estructurals i enzimàtiques." },
+                { id: "acn", title: "Àcids nucleics", desc: "ADN i ARN, informació genètica." },
+              ].map((c) => (
+                <motion.div
+                  key={c.id}
+                  whileHover={{ scale: 1.03 }}
+                  className="bg-white border rounded-xl p-4 w-64"
+                >
+                  <h4 className="font-bold">{c.title}</h4>
+                  <p className="text-sm text-gray-700 mt-2">{c.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </section>
 
-          <h3 className="text-xl font-semibold mt-6 mb-2">7. Teixits</h3>
-          <p className="mb-2"><strong>Epitelial:</strong> Revestiment i glàndules.</p>
-          <p className="mb-2"><strong>Connectiu:</strong> Suport (conjuntiu, adipós, cartilaginós, ossi, sanguini).</p>
-          <p className="mb-2"><strong>Muscular:</strong> Estriat (voluntari), llis i cardíac (involuntaris).</p>
-          <p className="mb-4"><strong>Nerviós:</strong> Neurones i cèl·lules glials.</p>
+          {/* 4. Mini-quiz interactiu (sin external links) */}
+          <section className="mb-8">
+            <h3 className="text-2xl font-semibold mb-3">Quiz ràpid</h3>
+            <p className="mb-3">Quina organel sintetitza proteïnes?</p>
 
-          <h3 className="text-xl font-semibold mt-6 mb-2">8. Organització biològica</h3>
-          <p className="mb-4">Cèl·lules → Teixits → Òrgans → Aparells → Sistemes (ex: epiteli → intestí → aparell digestiu).</p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              {["Mitocondris", "Reticle endoplasmàtic rugós", "Lisosomes"].map((opt) => (
+                <button
+                  key={opt}
+                  onClick={() => setQuizAnswer(opt)}
+                  className={`px-4 py-2 rounded-full border ${quizAnswer === opt ? "bg-[#dabd3e] border-black" : "bg-white border-gray-300"} transition`}
+                >
+                  {opt}
+                </button>
+              ))}
+              <button
+                onClick={() => setQuizSubmitted(true)}
+                className="ml-auto px-4 py-2 rounded-full bg-black text-white font-bold"
+              >
+                Comprova
+              </button>
+            </div>
 
-          <h3 className="text-xl font-semibold mt-6 mb-2">9. Reproducció cel·lular (mitosi)</h3>
-          <p className="mb-2"><strong>Interfase:</strong> Creixement i duplicació d'ADN (G1, S, G2).</p>
-          <p className="mb-2"><strong>Profase:</strong> Condensació cromatina, formació fus mitòtic.</p>
-          <p className="mb-2"><strong>Metafase:</strong> Alineament cromosomes al pla equatorial.</p>
-          <p className="mb-2"><strong>Anafase:</strong> Separació cromàtides germanes.</p>
-          <p className="mb-2"><strong>Telofase:</strong> Re-formació membranes nuclears.</p>
-          <p className="mb-4"><strong>Citocinesi:</strong> Divisió del citoplasma → 2 cèl·lules filles.</p>
+            {quizSubmitted && (
+              <div className="mt-4">
+                {quizAnswer === "Reticle endoplasmàtic rugós" ? (
+                  <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-green-700 font-semibold">
+                    Correcte! El RER (reticle endoplasmàtic rugós) és el lloc on hi ha ribosomes i es sintetitzen proteïnes.
+                  </motion.p>
+                ) : (
+                  <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-700 font-semibold">
+                    No és correcte. Torna-ho a intentar.
+                  </motion.p>
+                )}
+              </div>
+            )}
+          </section>
 
-          <button
-            onClick={() => navigate("/")}
-            className="mt-10 bg-[#dabd3e] px-6 py-2 rounded-full font-bold text-black shadow-md hover:scale-105 transition-transform"
-          >
-            Volver a Apuntes
-          </button>
-        </div>
-
-        {/* Right column reserves for images or diagrams */}
-        <div className="w-1/3 flex flex-col items-center gap-6">
-          {/* If you want to add images, put them in src/assets and import at top */}
-          <div className="w-full h-48 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400">Diagrama 1</div>
-          <div className="w-full h-48 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400">Diagrama 2</div>
+          <div className="mt-8 flex justify-center">
+            <button
+              onClick={() => navigate("/")}
+              className="bg-[#dabd3e] px-6 py-2 rounded-full font-bold text-black shadow-md hover:scale-105 transition-transform"
+            >
+              Volver a Apuntes
+            </button>
+          </div>
         </div>
       </motion.div>
     </div>

@@ -1,81 +1,91 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+
+const elementos = [
+  { simbolo: "H", nombre: "Hidrógeno" },
+  { simbolo: "Li", nombre: "Litio" },
+  { simbolo: "Na", nombre: "Sodio" },
+  { simbolo: "K", nombre: "Potasio" },
+  { simbolo: "Rb", nombre: "Rubidio" },
+  { simbolo: "Cs", nombre: "Cesio" },
+  { simbolo: "Fr", nombre: "Francio" },
+];
 
 const DocumentoFisicaQuimica: React.FC = () => {
-  const navigate = useNavigate();
+  const [respuesta, setRespuesta] = useState("");
+  const [resultado, setResultado] = useState("");
+  const [actual, setActual] = useState(() => elementos[Math.floor(Math.random() * elementos.length)]);
+
+  const comprobar = () => {
+    if (respuesta.trim().toLowerCase() === actual.nombre.toLowerCase()) {
+      setResultado("✅ Correcte!");
+    } else {
+      setResultado(`❌ Incorrecte. Era ${actual.nombre}.`);
+    }
+    setTimeout(() => {
+      setActual(elementos[Math.floor(Math.random() * elementos.length)]);
+      setRespuesta("");
+      setResultado("");
+    }, 2000);
+  };
 
   return (
-    <div className="min-h-screen w-full bg-gray-50 flex flex-col items-center py-8 px-6">
-      {/* Header */}
-      <div className="relative bg-[#dabd3e] border-b-4 border-dashed border-black overflow-hidden w-full max-w-5xl h-[7rem] rounded-t-3xl">
-        <div className="px-8 pt-8 relative h-full">
-          <h1 className="text-4xl font-bold text-black drop-shadow-[3px_3px_2px_rgba(0,0,0,0.4)] absolute top-6">
-            FÍSICA I QUÍMICA
-          </h1>
-          <button
-            onClick={() => navigate("/")}
-            className="absolute bottom-3 right-6 text-black text-sm bg-white rounded-full px-4 py-1 border-2 border-black shadow-md hover:scale-105 transition-transform"
-          >
-            ← Tornar
-          </button>
-        </div>
-      </div>
-
-      {/* Contenido principal */}
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-200 flex flex-col items-center py-10 px-6">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="bg-white border-4 border-gray-400 rounded-3xl shadow-lg mt-10 p-8 w-full max-w-5xl"
+        className="bg-white shadow-lg rounded-3xl border border-gray-300 p-8 max-w-xl text-center"
       >
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          Apunts de FÍSICA I QUÍMICA
-        </h2>
+        <h1 className="text-3xl font-bold text-blue-700 mb-3">Mini Apunts: Física i Química</h1>
+        <p className="text-gray-600 mb-6 italic">Primera columna de la Taula Periòdica</p>
 
-        <p className="mb-4">
-          En aquest tema treballarem la taula periòdica i els elements més
-          comuns. Recorda que els elements d’un mateix grup comparteixen
-          propietats similars.
-        </p>
-
-        <h3 className="text-xl font-semibold mb-3">Grup dels metalls alcalins</h3>
-        <p className="mb-4">
-          Són elements molt reactius que pertanyen al grup 1 de la taula
-          periòdica. Tots tenen un electró a la seva capa externa.
-        </p>
-
-        <p className="mb-4">
-          Memòria ràpida per a la columna:&nbsp;
-          <strong>{"H, Li, Na, K, Rb, Cs, Fr"}</strong>.
-          <br />
-          Frase mnemotècnica:&nbsp;
-          <strong>“Hay limones naranjas y kiwis robados en casa de Francisco”</strong>.
-        </p>
-
-        <h3 className="text-xl font-semibold mb-3">Propietats generals</h3>
-        <ul className="list-disc list-inside mb-6 space-y-2">
-          <li>Són metalls tous i bons conductors de l’electricitat.</li>
-          <li>Reaccionen amb l’aigua per formar hidròxids i hidrogen gas.</li>
-          <li>Es troben en compostos, no de forma lliure a la natura.</li>
-        </ul>
-
-        <h3 className="text-xl font-semibold mb-3">Reacció exemple</h3>
-        <p className="mb-6">
-          Quan el <strong>Na</strong> (sodi) reacciona amb aigua:
-        </p>
-        <p className="font-mono bg-gray-100 border rounded p-3 text-center mb-8">
-          2 Na (s) + 2 H₂O (l) → 2 NaOH (aq) + H₂ (g)
-        </p>
-
-        <div className="flex justify-center">
-          <button
-            onClick={() => navigate("/")}
-            className="bg-[#dabd3e] text-black font-bold px-8 py-3 rounded-full border-2 border-black hover:scale-105 active:scale-95 transition-transform shadow-md"
-          >
-            Tornar a Apunts
-          </button>
+        <div className="bg-blue-50 p-4 rounded-xl border border-blue-200 text-left mb-6">
+          <h2 className="text-xl font-semibold text-blue-800 mb-2">🧠 Truc per recordar-los</h2>
+          <p className="text-gray-700">
+            <strong>Frase:</strong> <em>"Hay Limones Naranjas y Kiwis Robados en Casa de Francisco"</em>
+          </p>
+          <ul className="list-disc ml-6 mt-2">
+            <li><strong>H</strong> → Hidrógeno</li>
+            <li><strong>Li</strong> → Litio</li>
+            <li><strong>Na</strong> → Sodio</li>
+            <li><strong>K</strong> → Potasio</li>
+            <li><strong>Rb</strong> → Rubidio</li>
+            <li><strong>Cs</strong> → Cesio</li>
+            <li><strong>Fr</strong> → Francio</li>
+          </ul>
         </div>
+
+        <div className="bg-yellow-50 p-4 rounded-xl border border-yellow-200 text-left mb-6">
+          <h2 className="text-xl font-semibold text-yellow-800 mb-2">⚙️ Curiositat</h2>
+          <p className="text-gray-700">
+            Tots aquests elements formen part del <strong>grup 1</strong>, conegut com els
+            <strong> metalls alcalins</strong>. Reaccionen fàcilment amb l’aigua i augmenten la seva
+            reactivitat cap avall (el Franci és el més reactiu!).
+          </p>
+        </div>
+
+        <div className="bg-green-50 p-4 rounded-xl border border-green-200 mb-6">
+          <h2 className="text-xl font-semibold text-green-800 mb-3">🧩 Joc ràpid: endevina el nom</h2>
+          <p className="text-lg mb-2">Quin element és <strong>{actual.simbolo}</strong>?</p>
+          <input
+            value={respuesta}
+            onChange={(e) => setRespuesta(e.target.value)}
+            placeholder="Escriu el nom..."
+            className="border border-gray-400 rounded-lg px-3 py-2 w-2/3 text-center mb-2"
+          />
+          <br />
+          <button
+            onClick={comprobar}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg transition"
+          >
+            Comprovar
+          </button>
+          {resultado && <p className="mt-3 text-lg font-semibold">{resultado}</p>}
+        </div>
+
+        <p className="text-gray-600 italic text-sm">
+          💡 Recorda: <strong>Només el símbol</strong> porta majúscula inicial i minúscula si té dues lletres.
+        </p>
       </motion.div>
     </div>
   );
